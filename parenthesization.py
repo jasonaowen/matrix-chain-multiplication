@@ -25,7 +25,16 @@ class MatrixChainMultiplier:
     self.count = len(dimensions) - 1
 
   def parenthesize(self):
-    self.calculate_costs()
+    return self.recursively_parenthesize(0, self.count - 1)
+
+  def recursively_parenthesize(self, start_matrix, end_matrix):
+    if end_matrix > start_matrix:
+      pivot = self.pivots[(start_matrix, end_matrix)]
+      left = self.recursively_parenthesize(start_matrix, pivot)
+      right = self.recursively_parenthesize(pivot + 1, end_matrix)
+      return "(%s, %s)" % (left, right)
+    else:
+      return str(start_matrix)
 
   def calculate_costs(self):
     self.costs = {}
@@ -61,7 +70,9 @@ def main():
                       nargs='+',
                       help="an ordered list of matrix dimensions")
   args = parser.parse_args()
-  print MatrixChainMultiplier(args.dimensions).parenthesize()
+  multiplier = MatrixChainMultiplier(args.dimensions)
+  multiplier.calculate_costs()
+  print multiplier.parenthesize()
 
 if __name__ == '__main__':
   main()

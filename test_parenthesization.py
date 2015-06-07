@@ -20,15 +20,25 @@ import unittest
 import parenthesization
 
 class MatrixChainMultiplicationTests(unittest.TestCase):
-  @unittest.skip("parenthesization isn't done yet")
-  def test_single_element_chain(self):
+  def test_one_element_chain(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2])
-    self.assertEqual(multiplier.parenthesize(), '1')
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.parenthesize(), '0')
 
-  @unittest.skip("parenthesization isn't done yet")
-  def test_double_element_chain(self):
+  def test_two_element_chain(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3])
-    self.assertEqual(multiplier.parenthesize(), '(1, 2)')
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.parenthesize(), '(0, 1)')
+
+  def test_wikipedia_sample_chain(self):
+    multiplier = parenthesization.MatrixChainMultiplier([10, 30, 5, 60])
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.parenthesize(), '((0, 1), 2)')
+
+  def test_book_sample_chain(self):
+    multiplier = parenthesization.MatrixChainMultiplier([30, 35, 15, 5, 10, 20, 25])
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.parenthesize(), '((0, (1, 2)), ((3, 4), 5))')
 
   def test_one_element_chain_calculates_costs(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2])
