@@ -90,11 +90,13 @@ Matrix-Chain-Multiply(A, s, i, j)
 16.1-1: Find an optimal parenthesization of a matrix-chain product whose
 sequence of dimensions is `[5, 10, 3, 12, 5, 50, 6]`.
 
-*Solution*: ((0, 1), ((2, 3), (4, 5)))
+[Solution](solution1.md)
 
 16.1-2: Give an efficient algorithm `Print-Optimal-Parens` to print the optimal
 parenthesization of a matrix chain given the table `s` computed by
 `Matrix-Chain-Order`. Analyze your algorithm.
+
+[Solution](solution2.md)
 
 16.1-3: Let R(i,j) be the number of times that table entry `m[i,j]` is
 referenced by `Matrix-Chain-Order` in computing other table entries. Show that
