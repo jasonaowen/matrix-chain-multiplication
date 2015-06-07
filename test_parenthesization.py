@@ -20,25 +20,27 @@ import unittest
 import parenthesization
 
 class MatrixChainMultiplicationTests(unittest.TestCase):
+  @unittest.skip("parenthesization isn't done yet")
   def test_single_element_chain(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2])
     self.assertEqual(multiplier.parenthesize(), '1')
 
+  @unittest.skip("parenthesization isn't done yet")
   def test_double_element_chain(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3])
     self.assertEqual(multiplier.parenthesize(), '(1, 2)')
 
-  def test_single_element_chain_calculates_costs(self):
+  def test_one_element_chain_calculates_costs(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2])
     multiplier.calculate_costs()
     self.assertEqual(multiplier.costs[(0,0)], 0)
 
-  def test_double_element_chain_calculates_costs(self):
+  def test_two_element_chain_calculates_costs(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3])
     multiplier.calculate_costs()
     self.assertEqual(multiplier.costs[(0,1)], 6)
 
-  def test_triple_element_chain_calculates_costs(self):
+  def test_three_element_chain_calculates_costs(self):
     multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3, 4])
     multiplier.calculate_costs()
     self.assertEqual(multiplier.costs[(0,1)], 6)
@@ -49,6 +51,22 @@ class MatrixChainMultiplicationTests(unittest.TestCase):
     multiplier = parenthesization.MatrixChainMultiplier([10, 30, 5, 60])
     multiplier.calculate_costs()
     self.assertEqual(multiplier.costs[(0,2)], 4500)
+
+  def test_two_element_chain_calculates_pivot(self):
+    multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3])
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.pivots[(0,1)], 0)
+
+  def test_three_element_chain_calculates_pivot(self):
+    multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3, 4])
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.pivots[(0,2)], 1)
+
+  def test_four_element_chain_calculates_pivot(self):
+    multiplier = parenthesization.MatrixChainMultiplier([1, 2, 3, 4, 5])
+    multiplier.calculate_costs()
+    self.assertEqual(multiplier.pivots[(0,3)], 2)
+    self.assertEqual(multiplier.pivots[(0,2)], 1)
 
 if __name__ == '__main__':
   unittest.main()
